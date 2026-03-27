@@ -1,0 +1,227 @@
+:root{
+    --bg: #16161d;
+    --bg-secundaria: #232332;
+    --primaria: #6f46de;
+    --primaria-hover: #8b6df0;
+    --text: #eaeaea;
+    --text-muted: #b3b3cc;
+    --border: #2c2c3a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: system-ui, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    background-color: var(--bg);
+    padding: 1.5rem;
+    line-height: 1.8;
+}
+
+header, nav, main, footer {
+    width: 100%;
+    max-width: 900px;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+}
+
+header, nav, footer {
+    text-align: center;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer {
+    margin-top: 2rem;
+    font-size: 70%;
+    font-weight: lighter;
+}
+
+h1, h2, section {
+    margin-bottom: 1rem;
+}
+
+nav ul, ul.game-list {
+    list-style: none;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+nav ul > li {
+    display: inline;
+}
+
+/* Game list */
+ul.game-list {
+    width: 100%;
+    max-width: 700px;
+}
+
+li.game {
+    background-color: var(--bg-secundaria);
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.gameId {
+    color: var(--text-muted);
+    font-size: 80%;
+}
+
+/* Stats grid */
+dl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin: 0;
+}
+
+/* Sections on home */
+section {
+    width: 100%;
+    max-width: 700px;
+}
+
+/* Form */
+form {
+    background-color: var(--bg-secundaria);
+    padding: 1.5rem;
+    padding-top: 0.8rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+form fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+form legend {
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+}
+
+form label {
+    display: block;
+    margin-top: 0.8rem;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background-color: var(--text-muted);
+    color: var(--bg);
+    font-size: 1rem;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+input.rating {
+    width: 6rem;
+}
+
+form input:focus, form select:focus {
+    outline: none;
+    background-color: var(--text);
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(111, 70, 222, 0.25);
+}
+
+form button {
+    margin-top: 1.5rem;
+    background-color: var(--primaria);
+    color: var(--text);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    display: block;
+}
+
+form button:hover {
+    background-color: var(--primaria-hover);
+}
+
+form button:active {
+    transform: scale(0.97);
+}
+
+a, a:visited, a:active {
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--primaria);
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primaria-hover);
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    header, nav, main, footer {
+        margin: 1rem auto;
+        padding: 0 0.5rem;
+    }
+
+    nav ul {
+        gap: 1rem;
+    }
+
+    dl {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.3rem;
+    }
+
+    form {
+        padding: 1rem;
+    }
+
+    li.game {
+        padding: 1rem;
+    }
+}

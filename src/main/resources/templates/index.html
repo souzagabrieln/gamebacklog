@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameBacklog</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header>
+        <h1><a th:href="@{/}">GameBacklog</a></h1>
+        <p>Organize os jogos que você já jogou ou pretende jogar</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a th:href="@{/gamelist}">Lista de jogos</a></li>
+            <li><a th:href="@{/add}">Adicionar jogo</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Estatísticas</h2>
+            <dl>
+                <dt>Total de jogos</dt>
+                <dd>-</dd>
+                <dt>Jogando</dt>
+                <dd>-</dd>
+                <dt>Zerados</dt>
+                <dd>-</dd>
+                <dt>Backlog</dt>
+                <dd>-</dd>
+            </dl>
+        </section>
+
+        <section>
+            <h2>Jogando agora</h2>
+
+            <ul class="game-list">
+                <li>Hollow Knight</li>
+                <li>Dark Souls 2</li>
+            </ul>
+        </section>
+    </main>
+    <footer><p>Gabriel Nascimento Souza - SI5</p></footer>
+
+</body>
+</html>

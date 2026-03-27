@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameBacklog</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header>
+        <h1><a th:href="@{/}">GameBacklog</a></h1>
+        <p>Organize os jogos que você já jogou ou pretende jogar</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a th:href="@{/gamelist}">Lista de jogos</a></li>
+            <li><a th:href="@{/add}">Adicionar jogo</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Adicionar jogo</h2>
+        <form th:action="@{/add}" method="post" th:object="${game}">
+            <fieldset>
+                <legend>Registro no backlog</legend>
+                <label for="name">Nome do jogo:</label>
+                <input type="text" th:field="*{name}" name="name" id="name" maxlength="50" required>
+
+                <label for="platform">Plataforma:</label>
+                <select th:field="*{platform}" name="platform" id="platform" required>
+                    <option value="">--Selecione--</option>
+                    <option value="pc">PC</option>
+                    <option value="ps4">PS4</option>
+                    <option value="switch">Nintendo Switch</option>
+                    <option value="mobile">Mobile</option>
+                </select>
+
+                <label for="status">Status:</label>
+                <select th:field="*{status}" name="status" id="status" required>
+                    <option value="backlog">Backlog</option>
+                    <option value="jogando">Jogando</option>
+                    <option value="zerado">Zerado</option>
+                    <option value="dropado">Dropado</option>
+                </select>
+
+                <label for="rating">Avaliação:</label>
+                <input type="number"  th:field="*{rating}" name="rating" id="rating" min="0" max="10" step="0.5" class="rating">
+
+                <button type="submit">Adicionar</button>
+            </fieldset>
+        </form>        
+    </main>
+    <footer><p>Gabriel Nascimento Souza - SI5</p></footer>
+
+</body>
+</html>
