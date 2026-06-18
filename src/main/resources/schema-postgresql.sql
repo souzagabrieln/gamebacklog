@@ -3,15 +3,6 @@ CREATE TABLE IF NOT EXISTS game(
     name VARCHAR(50) NOT NULL,
     platform VARCHAR(20) NOT NULL,
     status VARCHAR(20) NOT NULL,
-    rating DOUBLE PRECISION
+    rating DOUBLE PRECISION,
+    user_id UUID
 );
-
-ALTER TABLE game
-ADD COLUMN IF NOT EXISTS user_id UUID;
-
-ALTER TABLE game DROP CONSTRAINT IF EXISTS fk_game_user;
-
-ALTER TABLE game
-ADD CONSTRAINT fk_game_user
-FOREIGN KEY (user_id)
-REFERENCES users(id);
