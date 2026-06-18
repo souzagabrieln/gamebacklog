@@ -1,6 +1,7 @@
 package com.gabriel.gamebacklog.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.gabriel.gamebacklog.model.Game;
 import com.gabriel.gamebacklog.model.GameService;
+import com.gabriel.gamebacklog.model.User;
 
 @Controller
 public class PaginaController {
@@ -32,11 +34,20 @@ public class PaginaController {
     }
 
     @PostMapping("/addgame")
-    public String addGame(@ModelAttribute Game game, Model model) {
-        GameService cs = context.getBean(GameService.class);
-        cs.insertGame(game);
-        return "sucesso";
-    }
+    public String addGame(@ModelAttribute Game game) {
+
+    GameService cs = context.getBean(GameService.class);
+
+    UUID userId = UUID.fromString("8c677c2b-adea-4515-ba7d-222917814dd3"); //temporario
+    User user = new User();
+    user.setId(userId);
+    
+    game.setUser(user);
+
+    cs.insertGame(game);
+
+    return "redirect:/gamelist";
+}
 
     @GetMapping("/game/{uuid}")
     public String showGame(@PathVariable String uuid, Model model){
@@ -53,7 +64,8 @@ public class PaginaController {
     @GetMapping("/gamelist")
     public String listGames(Model model){
         GameService cs = context.getBean(GameService.class);
-        List<Game> games = cs.listGames();
+        UUID userId = UUID.fromString("8c677c2b-adea-4515-ba7d-222917814dd3"); //temporario
+        List<Game> games = cs.listGamesByUser(userId);
         model.addAttribute("games", games);
         return "gamelist";
     }
@@ -77,7 +89,7 @@ public class PaginaController {
     }
 
     @PostMapping("/game/{id}/delete")
-	public String deletarAluno(@PathVariable("id") String id, 
+	public String deleteGame(@PathVariable("id") String id, 
 			                       Model model) {
 		GameService cdao = context.getBean(GameService.class);
 		cdao.deleteGame(id);

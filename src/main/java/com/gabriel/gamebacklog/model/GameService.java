@@ -1,6 +1,8 @@
 package com.gabriel.gamebacklog.model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,10 @@ public class GameService {
 
     public ArrayList<Game> listGames(){
         return gameDAO.listGames();
+    }
+
+    public List<Game> listGamesByUser(UUID userId) {
+        return gameDAO.listGamesByUser(userId);
     }
 
     public void updateGame(Game novo, String uuid){

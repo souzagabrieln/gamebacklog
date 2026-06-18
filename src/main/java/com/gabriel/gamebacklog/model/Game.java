@@ -10,6 +10,7 @@ public class Game {
 
     private String id, name, platform, status;
     private Double rating;
+    private User user;
 
     //form
     public Game(){}
@@ -71,13 +72,18 @@ public class Game {
         this.rating = rating;
     }
 
-    public static Game convert(Map<String, Object> record){
+    public static Game convert(Map<String, Object> record) {
         UUID id = (UUID) record.get("id");
         String name = (String) record.get("name");
         String platform = (String) record.get("platform");
         String status = (String) record.get("status");
         Double rating = (Double) record.get("rating");
-        return new Game(id.toString(), name, platform, status, rating);
+        
+        Game game = new Game(id.toString(), name, platform, status, rating);
+        User user = new User(); user.setId((UUID) record.get("user_id"));
+        user.setUsername((String) record.get("username"));
+        game.setUser(user);
+        return game;
     }
 
     public static ArrayList<Game> convertAll (List<Map<String, Object>> records) {
@@ -87,6 +93,14 @@ public class Game {
             aux.add(convert(record));
         }
         return aux;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.gabriel.gamebacklog.model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -23,25 +25,44 @@ public class GameDAO {
     }
 
     public void insertGame(Game game){
-        String sql = "INSERT INTO game(name, platform, status, rating) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO game(name, platform, status, rating, user_id) VALUES(?,?,?,?,?)";
 
-        Object[] obj = new Object[4];
+        Object[] obj = new Object[5];
         obj[0] = game.getName();
         obj[1] = game.getPlatform();
         obj[2] = game.getStatus();
         obj[3] = game.getRating();
+        obj[4] = game.getUser().getId();
+
 
         jdbc.update(sql,obj);
     }
 
     public Game showGame(String uuid){
-        String sql = "SELECT * FROM game where id=?::uuid";
+        String sql = 
+            "SELECT g.*, u.id as user_id, u.username " +
+            "FROM game g " +
+            "JOIN users u ON g.user_id = u.id " +
+            "WHERE g.id = ?::uuid";
         return Game.convert(jdbc.queryForMap(sql,uuid));
     }
 
     public ArrayList<Game> listGames(){
-        String sql = "SELECT * FROM game";
+        String sql = 
+            "SELECT g.*, u.id as user_id, u.username " +
+            "FROM game g " +
+            "JOIN users u ON g.user_id = u.id";
         return Game.convertAll(jdbc.queryForList(sql));
+    }
+
+    public List<Game> listGamesByUser(UUID userId) {
+        String sql =
+            "SELECT g.*, u.id as user_id, u.username " +
+            "FROM game g " +
+            "JOIN users u ON g.user_id = u.id " +
+            "WHERE u.id = ?::uuid";
+
+        return Game.convertAll(jdbc.queryForList(sql, userId));
     }
 
     public void updateGame(Game novo, String uuid){

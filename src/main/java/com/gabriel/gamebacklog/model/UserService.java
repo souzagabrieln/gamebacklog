@@ -21,7 +21,7 @@ public class UserService {
     }
 
     public User findById(UUID id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User não encontrado"));
     }
 
     public void deleteById(UUID id) {

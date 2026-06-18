@@ -39,8 +39,29 @@ public class UserController {
 
     @GetMapping("/user/list")
     public String listUsers(Model model) {
-        // model.addAttribute("users", userService.listAll());
+        model.addAttribute("users", userService.listAll());
         return "userlist";
+    }
+
+    @GetMapping("/user/{id}/edit")
+    public String formEditUser(@PathVariable("id") UUID id, Model model) {
+
+        User user = userService.findById(id);
+
+        model.addAttribute("user", user);
+
+        return "edituser";
+    }
+
+    @PostMapping("/user/{id}/edit")
+    public String updateUser(@PathVariable("id") UUID id,
+                            @ModelAttribute User user) {
+
+        user.setId(id);
+
+        userService.save(user);
+
+        return "redirect:/user/list";
     }
 
     @PostMapping("/user/{id}/delete")
