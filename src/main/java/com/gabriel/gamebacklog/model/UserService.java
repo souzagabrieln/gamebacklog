@@ -24,8 +24,16 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User não encontrado"));
     }
 
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public void deleteById(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    public long countUsers() {
+        return userRepository.count();
     }
 
 }

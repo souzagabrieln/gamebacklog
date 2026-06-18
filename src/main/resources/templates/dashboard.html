@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,38 +67,70 @@
     </nav>
 
     <main>
-        <h2>Usuários cadastrados</h2>
 
-        <ul class="game-list">
+        <section>
+            <h2>Estatísticas</h2>
 
-            <li class="game" th:each="user : ${users}">
+            <div class="dashboard-cards">
 
-                <strong th:text="${user.username}"></strong>
+                <div class="card">
+                    <h3>Total de jogos</h3>
+                    <p th:text="${totalGames}"></p>
+                </div>
 
-                <br>
+                <div class="card">
+                    <h3>Plataforma favorita</h3>
+                    <p th:text="${favoritePlatform}">-</p>
+                </div>
 
-                Perfil:
-                <span th:text="${user.role}"></span>
+                <div class="card">
+                    <h3>Jogando</h3>
+                    <p th:text="${playing}"></p>
+                </div>
 
-                <br><br>
+                <div class="card">
+                    <h3>Zerados</h3>
+                    <p th:text="${completed}"></p>
+                </div>
 
-                <a th:href="@{/user/{id}/edit(id=${user.id})}">
-                    Editar
-                </a>
+                <div class="card">
+                    <h3>Dropados</h3>
+                    <p th:text="${dropped}"></p>
+                </div>
 
-                <form class="delete-form"
-                    th:action="@{/user/{id}/delete(id=${user.id})}"
-                    method="post">
+                <div class="card">
+                    <h3>Backlog</h3>
+                    <p th:text="${backlog}"></p>
+                </div>
 
-                    <button type="submit">
-                        Deletar
-                    </button>
+            </div>
+        </section>
 
-                </form>
+        <section>
+            <h2>Jogando agora</h2>
 
-            </li>
+            <div class="dashboard-cards">
 
-        </ul>        
+                <div class="card" th:each="game : ${playingGames}">
+                    <strong th:text="${game.name}"></strong>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Avaliações mais altas</h2>
+
+            <div class="dashboard-cards">
+
+                <div class="card" th:each="game : ${topRatedGames}">
+                    <strong th:text="${game.name}"></strong>
+                    <p th:text="${game.rating}"></p>
+                </div>
+
+            </div>
+        </section>
+
     </main>
     <footer><p>Gabriel Nascimento Souza - SI5</p></footer>
 

@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.gabriel.gamebacklog.model.Game;
 import com.gabriel.gamebacklog.model.GameService;
 import com.gabriel.gamebacklog.model.User;
+import com.gabriel.gamebacklog.model.UserService;
 
 @Controller
 public class PaginaController {
@@ -34,20 +37,22 @@ public class PaginaController {
     }
 
     @PostMapping("/addgame")
-    public String addGame(@ModelAttribute Game game) {
+        public String addGame(@ModelAttribute Game game) {
 
-    GameService cs = context.getBean(GameService.class);
+        GameService cs = context.getBean(GameService.class);
+        UserService us = context.getBean(UserService.class);
 
-    UUID userId = UUID.fromString("8c677c2b-adea-4515-ba7d-222917814dd3"); //temporario
-    User user = new User();
-    user.setId(userId);
-    
-    game.setUser(user);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        
+        User user = us.findByUsername(username);
+        
+        game.setUser(user);
 
-    cs.insertGame(game);
+        cs.insertGame(game);
 
-    return "redirect:/gamelist";
-}
+        return "redirect:/gamelist";
+    }
 
     @GetMapping("/game/{uuid}")
     public String showGame(@PathVariable String uuid, Model model){
@@ -64,10 +69,28 @@ public class PaginaController {
     @GetMapping("/gamelist")
     public String listGames(Model model){
         GameService cs = context.getBean(GameService.class);
-        UUID userId = UUID.fromString("8c677c2b-adea-4515-ba7d-222917814dd3"); //temporario
-        List<Game> games = cs.listGamesByUser(userId);
+        UserService us = context.getBean(UserService.class);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        User user = us.findByUsername(username);
+
+        List<Game> games = cs.listGamesByUser(user.getId());
         model.addAttribute("games", games);
         return "gamelist";
+    }
+
+    @GetMapping("/game/list-all")
+    public String listAllGames(Model model) {
+
+        GameService gs = context.getBean(GameService.class);
+
+        List<Game> games = gs.listGames(); // todos os jogos
+
+        model.addAttribute("games", games);
+
+        return "gamelist-all";
     }
 
     @GetMapping("/game/{id}/edit")
@@ -95,4 +118,53 @@ public class PaginaController {
 		cdao.deleteGame(id);
 		return "redirect:/gamelist";
 	}
+
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+
+        GameService gs = context.getBean(GameService.class);
+        UserService us = context.getBean(UserService.class);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        User user = us.findByUsername(username);
+
+        UUID userId = user.getId();
+
+        model.addAttribute("totalGames", gs.countGames(userId));
+        model.addAttribute("playing", gs.countAllByStatus("jogando"));
+        model.addAttribute("completed", gs.countAllByStatus("zerado"));
+        model.addAttribute("dropped", gs.countAllByStatus("dropado"));
+        model.addAttribute("backlog", gs.countAllByStatus("backlog"));
+
+        model.addAttribute("topRatedGames", gs.findTopRatedByUser(user.getId()));
+
+        model.addAttribute("favoritePlatform", gs.findFavoritePlatform(user.getId()));
+
+        model.addAttribute("playingGames", gs.findPlayingGames(userId));
+
+        return "dashboard";
+    }
+
+    @GetMapping("/admin/dashboard")
+    public String adminDashboard(Model model) {
+
+        GameService gs = context.getBean(GameService.class);
+        UserService us = context.getBean(UserService.class);
+
+        model.addAttribute("totalUsers", us.countUsers());
+        model.addAttribute("totalGames", gs.countAllGames());
+        model.addAttribute("avgGamesPerUser", gs.averageGamesPerUser());
+
+        model.addAttribute("topPlatforms", gs.topPlatforms());
+        model.addAttribute("topUsers", gs.topUsers());
+
+        model.addAttribute("playing", gs.countAllByStatus("jogando"));
+        model.addAttribute("completed", gs.countAllByStatus("zerado"));
+        model.addAttribute("dropped", gs.countAllByStatus("dropado"));
+        model.addAttribute("backlog", gs.countAllByStatus("backlog"));
+
+        return "admin-dashboard";
+    }
 }

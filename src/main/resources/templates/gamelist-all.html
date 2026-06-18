@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,40 +67,27 @@
     </nav>
 
     <main>
-        <h2>Usuários cadastrados</h2>
+        <h2>Todos os jogos</h2>
 
         <ul class="game-list">
 
-            <li class="game" th:each="user : ${users}">
-
-                <strong th:text="${user.username}"></strong>
-
-                <br>
-
-                Perfil:
-                <span th:text="${user.role}"></span>
-
-                <br><br>
-
-                <a th:href="@{/user/{id}/edit(id=${user.id})}">
-                    Editar
-                </a>
-
-                <form class="delete-form"
-                    th:action="@{/user/{id}/delete(id=${user.id})}"
-                    method="post">
-
-                    <button type="submit">
-                        Deletar
-                    </button>
-
+            <li class="game" th:each="game : ${games}">
+                <h3 th:text="${game.name}"></h3>
+                <p class="gameId"><span th:text="${game.id}"></span></p>
+                <p>Plataforma: <span th:text="${game.platform}"></span></p>
+                <p>Status: <span th:text="${game.status}"></span></p>
+                <p>Avaliação: <span th:text="${game.rating}"></span></p>
+                <p>Usuário: <span th:text="${game.user.username}"></span></p>
+                <a th:href="@{'/game/' + ${game.id} + '/edit'}">Editar</a>
+                <form th:action="@{'/game/' + ${game.id} + '/delete'}" method="post" class="delete-form" th:object="${game}">
+                    <button type="submit">Deletar</button>
                 </form>
-
             </li>
 
-        </ul>        
+        </ul>
     </main>
     <footer><p>Gabriel Nascimento Souza - SI5</p></footer>
+
 
 </body>
 </html>

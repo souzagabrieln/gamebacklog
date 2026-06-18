@@ -67,19 +67,88 @@
     </nav>
 
     <main>
+
         <section>
-            <h2 th:text="${gameName}"></h2>
-            <dl>
-                <dt>Id</dt>
-                <dd th:text="${gameId}"></dd>
-                <dt>Plataforma</dt>
-                <dd th:text="${gamePlatform}"></dd>
-                <dt>Status</dt>
-                <dd th:text="${gameStatus}"></dd>
-                <dt>Avaliação</dt>
-                <dd th:text="${gameRating}"></dd>
-            </dl>
+            <h2>Visão geral</h2>
+
+            <div class="dashboard-cards">
+
+                <div class="card">
+                    <h3>Total de usuários</h3>
+                    <p th:text="${totalUsers}"></p>
+                </div>
+
+                <div class="card">
+                    <h3>Total de jogos</h3>
+                    <p th:text="${totalGames}"></p>
+                </div>
+
+                <div class="card">
+                    <h3>Média jogos/usuário</h3>
+                    <p th:text="${#numbers.formatDecimal(avgGamesPerUser, 1, 2)}"></p>
+                </div>
+
+            </div>
         </section>
+
+        <section>
+            <h2>Rankings</h2>
+
+            <div class="dashboard-cards">
+
+                <div class="card">
+                    <h3>Top plataformas</h3>
+                    <ul>
+                        <li th:each="p : ${topPlatforms}">
+                            <span th:text="${p.platform}"></span>
+                            -
+                            <span th:text="${p.total}"></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Top usuários</h3>
+                    <ul>
+                        <li th:each="u : ${topUsers}">
+                            <span th:text="${u.username}"></span>
+                            -
+                            <span th:text="${u.total}"></span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>Jogos por status</h2>
+
+            <div class="dashboard-cards">
+
+                <div class="card">
+                    <h3>Jogando</h3>
+                    <p th:text="${playing}"></p>
+                </div>
+
+                <div class="card">
+                    <h3>Zerados</h3>
+                    <p th:text="${completed}"></p>
+                </div>
+
+                <div class="card">
+                    <h3>Dropados</h3>
+                    <p th:text="${dropped}"></p>
+                </div>
+
+                <div class="card">
+                    <h3>Backlog</h3>
+                    <p th:text="${backlog}"></p>
+                </div>
+
+            </div>
+        </section>
+
     </main>
     <footer><p>Gabriel Nascimento Souza - SI5</p></footer>
 
