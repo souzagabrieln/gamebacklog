@@ -111,7 +111,32 @@ section {
 }
 
 /* Form */
-form {
+.delete-form {
+    background: none;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    max-width: none;
+}
+
+.delete-form button {
+    margin: 0;
+    background-color: #d23a47;
+    color: var(--text);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.delete-form button:hover {
+    background-color: #ba2f3b;
+}
+
+.main-form {
     background-color: var(--bg-secundaria);
     padding: 1.5rem;
     padding-top: 0.8rem;
@@ -121,27 +146,27 @@ form {
     max-width: 600px;
 }
 
-form fieldset {
+.main-form fieldset {
     border: none;
     padding: 0;
     margin: 0;
 }
 
-form legend {
+.main-form legend {
     font-size: 0.85rem;
     font-weight: 400;
     margin-bottom: 0.5rem;
     color: var(--text-muted);
 }
 
-form label {
+.main-form label {
     display: block;
     margin-top: 0.8rem;
     margin-bottom: 0.3rem;
     font-weight: bold;
 }
 
-form input, form select {
+.main-form input, .main-form select {
     width: 100%;
     padding: 0.6rem 0.75rem;
     border-radius: 6px;
@@ -156,14 +181,14 @@ input.rating {
     width: 6rem;
 }
 
-form input:focus, form select:focus {
+.main-form input:focus, .main-form select:focus {
     outline: none;
     background-color: var(--text);
     border-color: var(--primaria);
     box-shadow: 0 0 0 2px rgba(111, 70, 222, 0.25);
 }
 
-form button {
+.main-form button {
     margin-top: 1.5rem;
     background-color: var(--primaria);
     color: var(--text);
@@ -177,11 +202,11 @@ form button {
     display: block;
 }
 
-form button:hover {
+.main-form button:hover {
     background-color: var(--primaria-hover);
 }
 
-form button:active {
+.main-form button:active {
     transform: scale(0.97);
 }
 

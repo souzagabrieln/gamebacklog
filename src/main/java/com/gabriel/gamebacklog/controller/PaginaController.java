@@ -25,13 +25,13 @@ public class PaginaController {
         return "index";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/addgame")
     public String formGame(Model model){
         model.addAttribute("game", new Game());
-        return "add";
+        return "addgame";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addgame")
     public String addGame(@ModelAttribute Game game, Model model) {
         GameService cs = context.getBean(GameService.class);
         cs.insertGame(game);
@@ -57,4 +57,30 @@ public class PaginaController {
         model.addAttribute("games", games);
         return "gamelist";
     }
+
+    @GetMapping("/game/{id}/edit")
+    public String formEditGame(@PathVariable("id") String uuid, Model model) {
+        GameService cs = context.getBean(GameService.class);
+        Game game = cs.showGame(uuid);
+        model.addAttribute("game", game);
+        model.addAttribute("id", uuid);
+        return "editgame";
+    }
+
+    @PostMapping("/game/{id}/edit")
+    public String updateGame(@PathVariable("id") String id,
+                             @ModelAttribute Game game,
+                             Model model){
+        GameService cs = context.getBean(GameService.class);
+        cs.updateGame(game, id);
+        return "redirect:/gamelist";
+    }
+
+    @PostMapping("/game/{id}/delete")
+	public String deletarAluno(@PathVariable("id") String id, 
+			                       Model model) {
+		GameService cdao = context.getBean(GameService.class);
+		cdao.deleteGame(id);
+		return "redirect:/gamelist";
+	}
 }

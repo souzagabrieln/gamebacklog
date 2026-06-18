@@ -22,4 +22,13 @@ public class GameService {
     public ArrayList<Game> listGames(){
         return gameDAO.listGames();
     }
+
+    public void updateGame(Game novo, String uuid){
+        gameDAO.updateGame(novo, uuid);
+    }
+
+    public void deleteGame(String uuid){
+        gameDAO.deleteGame(uuid);
+    }
+
 }

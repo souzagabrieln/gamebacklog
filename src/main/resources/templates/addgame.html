@@ -18,13 +18,13 @@
     <nav>
         <ul>
             <li><a th:href="@{/gamelist}">Lista de jogos</a></li>
-            <li><a th:href="@{/add}">Adicionar jogo</a></li>
+            <li><a th:href="@{/addgame}">Adicionar jogo</a></li>
         </ul>
     </nav>
 
     <main>
         <h2>Adicionar jogo</h2>
-        <form th:action="@{/add}" method="post" th:object="${game}">
+        <form class="main-form" th:action="@{/addgame}" method="post" th:object="${game}">
             <fieldset>
                 <legend>Registro no backlog</legend>
                 <label for="name">Nome do jogo:</label>

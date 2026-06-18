@@ -44,4 +44,21 @@ public class GameDAO {
         return Game.convertAll(jdbc.queryForList(sql));
     }
 
+    public void updateGame(Game novo, String uuid){
+		String sql = "UPDATE game " + 
+			"SET name = ?, platform = ?, status = ?, rating = ? WHERE id = ?::uuid";
+		Object[] obj = new Object[5];
+		obj[0] = novo.getName();
+		obj[1] = novo.getPlatform();
+        obj[2] = novo.getStatus();
+        obj[3] = novo.getRating();
+		obj[4] = uuid;
+		jdbc.update(sql,obj);
+	}
+
+    public void deleteGame(String uuid){
+        String sql = "DELETE FROM game where id = ?::uuid";
+        jdbc.update(sql,uuid);
+    }
+
 }

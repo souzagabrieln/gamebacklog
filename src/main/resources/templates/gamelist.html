@@ -18,7 +18,7 @@
     <nav>
         <ul>
             <li><a th:href="@{/gamelist}">Lista de jogos</a></li>
-            <li><a th:href="@{/add}">Adicionar jogo</a></li>
+            <li><a th:href="@{/addgame}">Adicionar jogo</a></li>
         </ul>
     </nav>
 
@@ -33,6 +33,10 @@
                 <p>Plataforma: <span th:text="${game.platform}"></span></p>
                 <p>Status: <span th:text="${game.status}"></span></p>
                 <p>Avaliação: <span th:text="${game.rating}"></span></p>
+                <a th:href="@{'/game/' + ${game.id} + '/edit'}">Editar</a>
+                <form th:action="@{'/game/' + ${game.id} + '/delete'}" method="post" class="delete-form" th:object="${game}">
+                    <button type="submit">Deletar</button>
+                </form>
             </li>
 
         </ul>
